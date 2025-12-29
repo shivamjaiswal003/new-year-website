@@ -1189,7 +1189,8 @@
             <!-- STEP 2 -->
             <div id="step-2" class="hidden step-content">
                 <div class="img-container"><img src="Assets/shy-cat.png" alt="Shy Cat"></div>
-                <h1 class="split-text">Hehe, I knew it! <br> I knew you'd say yes! 😉<br>Click on next for the<br>          surprise!! ✨
+                <h1 class="split-text">Hehe, I knew it! <br> I knew you'd say yes! 😉<br>Click on next for the<br>
+                    surprise!! ✨
                 </h1>
                 <button class="btn mag-btn" onclick="navigate('step-2', 'step-3')">Next ➡️</button>
             </div>
@@ -1401,8 +1402,6 @@
             document.documentElement.style.setProperty('--cursor-x', e.clientX + 'px');
             document.documentElement.style.setProperty('--cursor-y', e.clientY + 'px');
 
-            if (window.innerWidth < 768) return;
-
             // Performant Tilt using quickTo
             tiltY(xNormal * 12); // Slightly tuned down from 15 for smoothness
             tiltX(-yNormal * 12);
@@ -1433,6 +1432,66 @@
                 ease: 'power1.out'
             });
         });
+
+        // --- MOBILE DEVICE ORIENTATION SUPPORT ---
+        window.addEventListener('deviceorientation', (e) => {
+            if (window.innerWidth >= 768) return; // Disable on desktop if it somehow fires
+
+            // Gamma: Left/Right tilt (-90 to 90)
+            // Beta: Front/Back tilt (-180 to 180). Holding phone upright is ~45 to 90.
+
+            // Normalize Gamma (Left/Right)
+            // Clamp between -45 and 45 for better control
+            let gamma = e.gamma || 0;
+            if (gamma > 45) gamma = 45;
+            if (gamma < -45) gamma = -45;
+            const xNormal = gamma / 45; // -1 to 1
+
+            // Normalize Beta (Front/Back)
+            // Center around 60 degrees (typical holding angle)
+            let beta = e.beta || 0;
+            // We want +/- 45 degrees from 60 (i.e., 15 to 105)
+            const betaCenter = 60;
+            let betaDelta = beta - betaCenter;
+            if (betaDelta > 45) betaDelta = 45;
+            if (betaDelta < -45) betaDelta = -45;
+            const yNormal = betaDelta / 45; // -1 to 1
+
+            // Update CSS Variables for lighting
+            document.documentElement.style.setProperty('--mouse-x', xNormal);
+            document.documentElement.style.setProperty('--mouse-y', yNormal);
+
+            // Apply Tilt
+            tiltY(xNormal * 12);
+            tiltX(-yNormal * 12);
+
+            // Apply Parallax (Reuse same logic as mousemove)
+            gsap.to(".split-text", {
+                x: xNormal * 20,
+                y: yNormal * 20,
+                duration: 0.5,
+                overwrite: 'auto',
+                ease: "power1.out"
+            });
+
+            gsap.to(".btn-group, .btn", {
+                x: xNormal * 10,
+                y: yNormal * 10,
+                duration: 0.5,
+                overwrite: 'auto',
+                ease: "power1.out"
+            });
+
+            // Holographic Sheen
+            gsap.to(sheen, {
+                x: -xNormal * 400,
+                y: -yNormal * 400,
+                duration: 0.5,
+                overwrite: 'auto',
+                ease: 'power1.out'
+            });
+        });
+
 
         // --- 2. MAGNETIC BUTTONS - Enhanced ---
         const magnets = document.querySelectorAll('.mag-btn');
