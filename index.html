@@ -1120,1259 +1120,1401 @@
             left: -15px;
             animation-delay: 1.5s;
         }
+
+        /* --- CHRISTMAS ADDITIONS --- */
+        /* Snow Canvas */
+        .snow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 99999;
+            /* Below modal but above page */
+        }
+
+        /* Float Animation */
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* Music Toggle Button (Pill Style) */
+        .music-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background: linear-gradient(90deg, #ff8a65, #c62828);
+            color: white;
+            border-radius: 40px;
+            font-weight: bold;
+            text-align: center;
+            cursor: pointer;
+            z-index: 10001;
+            /* Above everything */
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            font-family: 'Nunito', sans-serif;
+            border: none;
+            outline: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .music-toggle:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .music-toggle.hidden {
+            display: none !important;
+        }
     </style>
 </head>
 
 <body>
 
-    <div id="cursor-follower"></div>
-    <div class="progress-indicator" id="progress-bar" style="width: 0%;"></div>
+    <body>
+        <canvas id="snow-canvas" class="snow"></canvas>
+        <div id="cursor-follower"></div>
+        <div class="progress-indicator" id="progress-bar" style="width: 0%;"></div>
 
-    <!-- PREMIUM TWO-PANEL CURTAIN -->
-    <div class="curtain-container" id="curtain-container">
-        <div class="curtain-panel left closed" id="curtain-left"></div>
-        <div class="curtain-panel right closed" id="curtain-right"></div>
-    </div>
-
-    <!-- Transition particles -->
-    <div class="transition-particles" id="transition-particles"></div>
-
-    <div id="music-overlay">
-        <div class="overlay-content">
-            <span class="music-icon-large">🎵</span>
-            <h1>Ready for surprise?</h1>
-            <p>For the best experience, turn on the sound! 🎧</p>
-            <button class="btn mag-btn" onclick="startExperience()">Yes, Start! 💖</button>
+        <!-- PREMIUM TWO-PANEL CURTAIN -->
+        <div class="curtain-container" id="curtain-container">
+            <div class="curtain-panel left closed" id="curtain-left"></div>
+            <div class="curtain-panel right closed" id="curtain-right"></div>
         </div>
-    </div>
 
-    <div class="bg-particles" id="particles"></div>
-    <audio id="bg-music" loop>
-        <source src="Assets/song.mp3" type="audio/mp3">
-    </audio>
-    <div class="music-toggle hidden" id="music-btn" onclick="toggleMusic()">🎵</div>
-    <div id="flash"></div>
+        <!-- Transition particles -->
+        <div class="transition-particles" id="transition-particles"></div>
 
-    <!-- PREMIUM MODAL HTML -->
-    <div id="secret-modal" class="premium-modal-overlay">
-        <div class="premium-modal">
-            <div class="modal-decoration deco-1">💖</div>
-            <div class="modal-decoration deco-2">✨</div>
-            <h2>Secret Found!</h2>
-            <p id="modal-text"></p>
-            <button class="premium-modal-btn" onclick="closePremiumModal()">I Love You too x 3000! 💖</button>
+        <div id="music-overlay">
+            <div class="overlay-content">
+                <span class="music-icon-large">🎵</span>
+                <h1>Ready for surprise?</h1>
+                <p>For the best experience, turn on the sound! 🎧</p>
+                <button class="btn mag-btn" onclick="startExperience()">Yes, Start! 💖</button>
+            </div>
         </div>
-    </div>
+
+        <div class="bg-particles" id="particles"></div>
+        <audio id="bg-music" loop>
+            <source src="Assets/song.mp3" type="audio/mp3">
+        </audio>
+        <div class="music-toggle hidden" id="music-btn" onclick="toggleMusic()">🔈 Music OFF</div>
+        <div id="flash"></div>
+
+        <!-- PREMIUM MODAL HTML -->
+        <div id="secret-modal" class="premium-modal-overlay">
+            <div class="premium-modal">
+                <div class="modal-decoration deco-1">💖</div>
+                <div class="modal-decoration deco-2">✨</div>
+                <h2>Secret Found!</h2>
+                <p id="modal-text"></p>
+                <button class="premium-modal-btn" onclick="closePremiumModal()">I Love You too x 3000! 💖</button>
+            </div>
+        </div>
 
 
-    <div id="tilt-wrapper">
-        <div class="container hidden" id="main-container">
-            <div class="holo-sheen"></div>
-            <!-- STEP 1 -->
-            <div id="step-1" class="step-content">
-                <div class="img-container"><img src="Assets/cat-0.png" alt="Cute Cat"></div>
-                <h1 class="split-text">Hey I made something for you...<br>Will you see it? 🥺</h1>
-                <div class="btn-group">
-                    <button class="btn mag-btn" onclick="navigate('step-1', 'step-2')">Yes! ❤️</button>
-                    <button class="btn btn-secondary mag-btn" onclick="navigate('step-1', 'threat-screen')">No...
-                        💔</button>
+        <div id="tilt-wrapper">
+            <div class="container hidden" id="main-container">
+                <div class="holo-sheen"></div>
+                <!-- STEP 1 -->
+                <div id="step-1" class="step-content">
+                    <div class="img-container"><img src="Assets/cat-0.png" alt="Cute Cat"></div>
+                    <h1 class="split-text floating">Hey I made something for you...<br>Will you see it? 🥺</h1>
+                    <div class="btn-group">
+                        <button class="btn mag-btn" onclick="navigate('step-1', 'step-2')">Yes! ❤️</button>
+                        <button class="btn btn-secondary mag-btn" onclick="navigate('step-1', 'threat-screen')">No...
+                            💔</button>
 
-                </div>
-            </div>
-            <!-- THREAT -->
-            <div id="threat-screen" class="hidden step-content">
-                <div class="img-container"><img src="Assets/cat-gun.png" alt="Gun Cat"></div>
-                <h1 class="split-text">HOW DARE YOUUU! 😡</h1>
-                <button class="btn mag-btn" onclick="navigate('threat-screen', 'step-1')">Sorry, I was joking!
-                    😭</button>
-            </div>
-            <!-- STEP 2 -->
-            <div id="step-2" class="hidden step-content">
-                <div class="img-container"><img src="Assets/shy-cat.png" alt="Shy Cat"></div>
-                <h1 class="split-text">Hehe, I knew it! <br> I knew you'd say yes! 😉<br>Click on next for the<br>
-                    surprise!! ✨
-                </h1>
-                <button class="btn mag-btn" onclick="navigate('step-2', 'step-3')">Next ➡️</button>
-            </div>
-            <!-- STEP 3 (GIFT) -->
-            <div id="step-3" class="hidden step-content">
-                <div class="img-container">
-                    <img src="Assets/cat-rose.png" alt="Flower Cat">
-                    <div id="gift-zone" class="interactive-area" onclick="navigate('step-3', 'step-collage')"></div>
-                </div>
-                <h1 class="split-text">Good Girl <br> Simu Bachaaaa !! 💖<br>click and hold on the gift box 🎁</h1>
-            </div>
-            <!-- COLLAGE -->
-            <div id="step-collage" class="hidden step-content">
-                <h1 class="split-text">2025 Summary! 📸</h1>
-                <div class="img-container">
-                    <img src="Assets/memory.png" alt="2025 Memories">
-                </div>
-                <button class="btn mag-btn" onclick="navigate('step-collage', 'step-letter')">Read Letter 💌</button>
-            </div>
-            <!-- LETTER -->
-            <div id="step-letter" class="hidden step-content">
-                <h1 class="split-text">Letter For You 📝</h1>
-                <div class="letter-paper">
-                    <div class="letter-content" id="typewriter-letter"></div>
-                </div>
-                <button class="btn mag-btn" onclick="navigate('step-letter', 'step-wishes')">My Wishes ✨</button>
-            </div>
-            <!-- WISHES -->
-            <div id="step-wishes" class="hidden step-content">
-                <div class="img-container" style="margin-bottom: 10px;">
-                    <img src="Assets/us_cat.png" style="height: 150px;" alt="Us">
-                </div>
-                <h1 class="split-text">For 2026, I wish you:</h1>
-                <ul class="wishes-list">
-                    <li>Peace & Love 🕊️ (Lifetime subscription included)</li>
-                    <li>Lots of laughter 😂 (Don't worry, I know I'm funny AF)</li>
-                    <li>Good sleep fr 😴 (No more doom-scrolling)</li>
-                    <li>Main-character energy 💅 (Sassy mode: ON)</li>
-                    <li>And most importantly... A Killer Placement 💼❤️</li>
-                </ul>
-                <button class="btn mag-btn" onclick="navigate('step-wishes', 'step-4')">One Last Thing...</button>
-            </div>
-            <!-- STEP 4 (CAMERA) -->
-            <div id="step-4" class="hidden step-content">
-                <div class="img-container">
-                    <img src="Assets/cat-camera.png" alt="Camera Cat">
-                    <div id="camera-zone" class="interactive-area" onclick="takePhoto()"></div>
-                </div>
-                <h1 class="split-text">SIMUUUUUUUU SMILEEEEE 😁 <br>Click on the camera to reveal photo!! 📸</h1>
-            </div>
-            <!-- STEP 5 (FINAL) -->
-            <div id="step-5" class="hidden step-content">
-                <div class="polaroid-wrapper">
-                    <div class="polaroid">
-                        <img src="Assets/us_cat.png" class="sticker sticker-top"
-                            style="position:absolute; top:-60px; right:-30px; width:150px;" alt="Decoration">
-                        <img id="final-photo" src="Assets/us.jpg" alt="Us">
-                        <div class="caption" id="typewriter-text"
-                            style="font-family: 'Dancing Script', cursive; font-size: 3rem; margin-top: 25px; color: #d81b60; min-height: 120px; white-space: pre-line;">
-                        </div>
                     </div>
                 </div>
-                <button class="btn btn-secondary mag-btn" style="margin-top: 50px;"
-                    onclick="triggerGrandFinale()">Celebrate Again! 🎉🎊</button>
+                <!-- THREAT -->
+                <div id="threat-screen" class="hidden step-content">
+                    <div class="img-container"><img src="Assets/cat-gun.png" alt="Gun Cat"></div>
+                    <h1 class="split-text">HOW DARE YOUUU! 😡</h1>
+                    <button class="btn mag-btn" onclick="navigate('threat-screen', 'step-1')">Sorry, I was joking!
+                        😭</button>
+                </div>
+                <!-- STEP 2 -->
+                <div id="step-2" class="hidden step-content">
+                    <div class="img-container"><img src="Assets/shy-cat.png" alt="Shy Cat"></div>
+                    <h1 class="split-text">Hehe, I knew it! <br> I knew you'd say yes! 😉<br>Click on next for the<br>
+                        surprise!! ✨
+                    </h1>
+                    <button class="btn mag-btn" onclick="navigate('step-2', 'step-3')">Next ➡️</button>
+                </div>
+                <!-- STEP 3 (GIFT) -->
+                <div id="step-3" class="hidden step-content">
+                    <div class="img-container">
+                        <img src="Assets/cat-rose.png" alt="Flower Cat">
+                        <div id="gift-zone" class="interactive-area" onclick="navigate('step-3', 'step-collage')"></div>
+                    </div>
+                    <h1 class="split-text">Good Girl <br> Simu Bachaaaa !! 💖<br>click and hold on the gift box 🎁</h1>
+                </div>
+                <!-- COLLAGE -->
+                <div id="step-collage" class="hidden step-content">
+                    <h1 class="split-text">2025 Summary! 📸</h1>
+                    <div class="img-container">
+                        <img src="Assets/memory.png" alt="2025 Memories">
+                    </div>
+                    <button class="btn mag-btn" onclick="navigate('step-collage', 'step-letter')">Read Letter
+                        💌</button>
+                </div>
+                <!-- LETTER -->
+                <div id="step-letter" class="hidden step-content">
+                    <h1 class="split-text">Letter For You 📝</h1>
+                    <div class="letter-paper">
+                        <div class="letter-content" id="typewriter-letter"></div>
+                    </div>
+                    <button class="btn mag-btn" onclick="navigate('step-letter', 'step-wishes')">My Wishes ✨</button>
+                </div>
+                <!-- WISHES -->
+                <div id="step-wishes" class="hidden step-content">
+                    <div class="img-container" style="margin-bottom: 10px;">
+                        <img src="Assets/us_cat.png" style="height: 150px;" alt="Us">
+                    </div>
+                    <h1 class="split-text">For 2026, I wish you:</h1>
+                    <ul class="wishes-list">
+                        <li>Peace & Love 🕊️ (Lifetime subscription included)</li>
+                        <li>Lots of laughter 😂 (Don't worry, I know I'm funny AF)</li>
+                        <li>Good sleep fr 😴 (No more doom-scrolling)</li>
+                        <li>Main-character energy 💅 (Sassy mode: ON)</li>
+                        <li>And most importantly... A Killer Placement 💼❤️</li>
+                    </ul>
+                    <button class="btn mag-btn" onclick="navigate('step-wishes', 'step-4')">One Last Thing...</button>
+                </div>
+                <!-- STEP 4 (CAMERA) -->
+                <div id="step-4" class="hidden step-content">
+                    <div class="img-container">
+                        <img src="Assets/cat-camera.png" alt="Camera Cat">
+                        <div id="camera-zone" class="interactive-area" onclick="takePhoto()"></div>
+                    </div>
+                    <h1 class="split-text">SIMUUUUUUUU SMILEEEEE 😁 <br>Click on the camera to reveal photo!! 📸</h1>
+                </div>
+                <!-- STEP 5 (FINAL) -->
+                <div id="step-5" class="hidden step-content">
+                    <div class="polaroid-wrapper">
+                        <div class="polaroid">
+                            <img src="Assets/us_cat.png" class="sticker sticker-top"
+                                style="position:absolute; top:-60px; right:-30px; width:150px;" alt="Decoration">
+                            <img id="final-photo" src="Assets/us.jpg" alt="Us">
+                            <div class="caption" id="typewriter-text"
+                                style="font-family: 'Dancing Script', cursive; font-size: 3rem; margin-top: 25px; color: #d81b60; min-height: 120px; white-space: pre-line;">
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-secondary mag-btn" style="margin-top: 50px;"
+                        onclick="triggerGrandFinale()">Celebrate Again! 🎉🎊</button>
+                </div>
             </div>
         </div>
-    </div>
 
-    <script>
-        // --- GSAP SETUP ---
-        gsap.registerPlugin(Draggable);
+        <script>
+            // --- GSAP SETUP ---
+            gsap.registerPlugin(Draggable);
 
-        // 1. TEXT SPLITTING (WORD SAFE)
-        function prepareTextAnimation() {
-            const headers = document.querySelectorAll('.split-text');
-            headers.forEach(h1 => {
-                // Robust Line Break Handling:
-                // 1. Replace <br> with a unique placeholder in HTML
-                const tempHTML = h1.innerHTML.replace(/<br\s*\/?>/gi, '___BR___');
-                // 2. Use a temp div to strip tags/decode entities while keeping placeholders
-                const tempDiv = document.createElement('div');
-                tempDiv.innerHTML = tempHTML;
-                const text = tempDiv.innerText;
+            // 1. TEXT SPLITTING (WORD SAFE)
+            function prepareTextAnimation() {
+                const headers = document.querySelectorAll('.split-text');
+                headers.forEach(h1 => {
+                    // Robust Line Break Handling:
+                    // 1. Replace <br> with a unique placeholder in HTML
+                    const tempHTML = h1.innerHTML.replace(/<br\s*\/?>/gi, '___BR___');
+                    // 2. Use a temp div to strip tags/decode entities while keeping placeholders
+                    const tempDiv = document.createElement('div');
+                    tempDiv.innerHTML = tempHTML;
+                    const text = tempDiv.innerText;
 
-                h1.innerHTML = '';
+                    h1.innerHTML = '';
 
-                // 3. Split by placeholder
-                const lines = text.split('___BR___');
+                    // 3. Split by placeholder
+                    const lines = text.split('___BR___');
 
-                lines.forEach((line) => {
-                    const lineDiv = document.createElement('div');
+                    lines.forEach((line) => {
+                        const lineDiv = document.createElement('div');
 
-                    // Handle empty lines (for valid <br><br> spacing)
-                    if (line.trim() === '') {
-                        lineDiv.innerHTML = '&nbsp;'; // Occupy space
-                        h1.appendChild(lineDiv);
-                        return;
-                    }
+                        // Handle empty lines (for valid <br><br> spacing)
+                        if (line.trim() === '') {
+                            lineDiv.innerHTML = '&nbsp;'; // Occupy space
+                            h1.appendChild(lineDiv);
+                            return;
+                        }
 
-                    // Split by words first
-                    const words = line.split(' ');
+                        // Split by words first
+                        const words = line.split(' ');
 
-                    words.forEach(wordText => {
-                        const wordSpan = document.createElement('span');
-                        wordSpan.className = 'word';
+                        words.forEach(wordText => {
+                            const wordSpan = document.createElement('span');
+                            wordSpan.className = 'word';
 
-                        // Split characters inside word
-                        [...wordText].forEach(char => {
-                            const charSpan = document.createElement('span');
-                            charSpan.className = 'char';
-                            charSpan.innerText = char;
-                            wordSpan.appendChild(charSpan);
+                            // Split characters inside word
+                            [...wordText].forEach(char => {
+                                const charSpan = document.createElement('span');
+                                charSpan.className = 'char';
+                                charSpan.innerText = char;
+                                wordSpan.appendChild(charSpan);
+                            });
+
+                            lineDiv.appendChild(wordSpan);
                         });
 
-                        lineDiv.appendChild(wordSpan);
+                        h1.appendChild(lineDiv);
                     });
+                });
+            }
+            prepareTextAnimation();
 
-                    h1.appendChild(lineDiv);
+            // Initialize curtains in closed state
+            window.addEventListener('DOMContentLoaded', () => {
+                const curtainLeft = document.getElementById('curtain-left');
+                const curtainRight = document.getElementById('curtain-right');
+                if (curtainLeft && curtainRight) {
+                    gsap.set([curtainLeft, curtainRight], {
+                        x: '0%',
+                        rotationY: 0,
+                        opacity: 1
+                    });
+                }
+            });
+
+            // 2. LIVING IMAGES (Breathing) - Smoother, more subtle
+            gsap.to(".img-container img", {
+                y: -8,
+                duration: 2.5,
+                yoyo: true,
+                repeat: -1,
+                ease: "sine.inOut"
+            });
+
+            // --- 1. HOLOGRAPHIC TILT & SHINE (HIGH EFFORT) ---
+            const container = document.getElementById('main-container');
+            const sheen = document.querySelector('.holo-sheen');
+            const cursorFollower = document.getElementById('cursor-follower');
+
+            // Progress tracking
+            const stepOrder = ['step-1', 'step-2', 'step-3', 'step-4', 'step-5'];
+            let currentStepIndex = 0;
+
+            function updateProgress(stepId) {
+                const index = stepOrder.indexOf(stepId);
+                if (index !== -1) {
+                    currentStepIndex = index;
+                    const progress = ((index + 1) / stepOrder.length) * 100;
+                    gsap.to('#progress-bar', {
+                        width: progress + '%',
+                        duration: 0.6,
+                        ease: 'power2.out'
+                    });
+                }
+            }
+
+            // PERFORMANT MOUSE MOVEMENT HANDLING
+            const xTo = gsap.quickTo(cursorFollower, "x", { duration: 0.1, ease: "power2.out" });
+            const yTo = gsap.quickTo(cursorFollower, "y", { duration: 0.1, ease: "power2.out" });
+
+            // Tilt Setters
+            const tiltY = gsap.quickTo(container, "rotationY", { duration: 0.4, ease: "power2.out" });
+            const tiltX = gsap.quickTo(container, "rotationX", { duration: 0.4, ease: "power2.out" });
+
+            // Throttle Fairy Dust
+            let lastDustTime = 0;
+            const dustInterval = 50; // ms
+
+            document.addEventListener('mousemove', (e) => {
+                // optimized cursor movement
+                xTo(e.clientX);
+                yTo(e.clientY);
+
+                // Throttled Fairy Dust
+                const now = Date.now();
+                if (now - lastDustTime > 100) { // OPTIMIZED: Increased throttle
+                    createFairyDust(e.pageX, e.pageY);
+                    lastDustTime = now;
+                }
+
+                // Custom Cursor - Enhanced hover detection
+                const target = e.target;
+                const isButton = target.classList.contains('btn') || target.closest('.btn');
+                const isInteractive = target.classList.contains('interactive-area') || target.closest('.interactive-area');
+
+                if (isButton || isInteractive) {
+                    cursorFollower.classList.add('hover-btn');
+                } else {
+                    cursorFollower.classList.remove('hover-btn');
+                }
+
+                // Set CSS Variables (Keep minimal)
+                const xNormal = (e.clientX / window.innerWidth - 0.5) * 2; // -1 to 1
+                const yNormal = (e.clientY / window.innerHeight - 0.5) * 2;
+
+                document.documentElement.style.setProperty('--mouse-x', xNormal);
+                document.documentElement.style.setProperty('--mouse-y', yNormal);
+                document.documentElement.style.setProperty('--cursor-x', e.clientX + 'px');
+                document.documentElement.style.setProperty('--cursor-y', e.clientY + 'px');
+
+                // Performant Tilt using quickTo
+                tiltY(xNormal * 12); // Slightly tuned down from 15 for smoothness
+                tiltX(-yNormal * 12);
+
+                // Debounced/Lighter Parallax
+                gsap.to(".split-text", {
+                    x: xNormal * 20,
+                    y: yNormal * 20,
+                    duration: 0.5,
+                    overwrite: 'auto',
+                    ease: "power1.out"
+                });
+
+                gsap.to(".btn-group, .btn", {
+                    x: xNormal * 10,
+                    y: yNormal * 10,
+                    duration: 0.5,
+                    overwrite: 'auto',
+                    ease: "power1.out"
+                });
+
+                // Holographic Sheen
+                gsap.to(sheen, {
+                    x: -xNormal * 400,
+                    y: -yNormal * 400,
+                    duration: 0.5,
+                    overwrite: 'auto',
+                    ease: 'power1.out'
                 });
             });
-        }
-        prepareTextAnimation();
 
-        // Initialize curtains in closed state
-        window.addEventListener('DOMContentLoaded', () => {
-            const curtainLeft = document.getElementById('curtain-left');
-            const curtainRight = document.getElementById('curtain-right');
-            if (curtainLeft && curtainRight) {
-                gsap.set([curtainLeft, curtainRight], {
+            // --- MOBILE DEVICE ORIENTATION SUPPORT ---
+            window.addEventListener('deviceorientation', (e) => {
+                if (window.innerWidth >= 768) return; // Disable on desktop if it somehow fires
+
+                // Gamma: Left/Right tilt (-90 to 90)
+                // Beta: Front/Back tilt (-180 to 180). Holding phone upright is ~45 to 90.
+
+                // Normalize Gamma (Left/Right)
+                // Clamp between -45 and 45 for better control
+                let gamma = e.gamma || 0;
+                if (gamma > 45) gamma = 45;
+                if (gamma < -45) gamma = -45;
+                const xNormal = gamma / 45; // -1 to 1
+
+                // Normalize Beta (Front/Back)
+                // Center around 60 degrees (typical holding angle)
+                let beta = e.beta || 0;
+                // We want +/- 45 degrees from 60 (i.e., 15 to 105)
+                const betaCenter = 60;
+                let betaDelta = beta - betaCenter;
+                if (betaDelta > 45) betaDelta = 45;
+                if (betaDelta < -45) betaDelta = -45;
+                const yNormal = betaDelta / 45; // -1 to 1
+
+                // Update CSS Variables for lighting
+                document.documentElement.style.setProperty('--mouse-x', xNormal);
+                document.documentElement.style.setProperty('--mouse-y', yNormal);
+
+                // Apply Tilt
+                tiltY(xNormal * 12);
+                tiltX(-yNormal * 12);
+
+                // Apply Parallax (Reuse same logic as mousemove)
+                gsap.to(".split-text", {
+                    x: xNormal * 20,
+                    y: yNormal * 20,
+                    duration: 0.5,
+                    overwrite: 'auto',
+                    ease: "power1.out"
+                });
+
+                gsap.to(".btn-group, .btn", {
+                    x: xNormal * 10,
+                    y: yNormal * 10,
+                    duration: 0.5,
+                    overwrite: 'auto',
+                    ease: "power1.out"
+                });
+
+                // Holographic Sheen
+                gsap.to(sheen, {
+                    x: -xNormal * 400,
+                    y: -yNormal * 400,
+                    duration: 0.5,
+                    overwrite: 'auto',
+                    ease: 'power1.out'
+                });
+            });
+
+
+            // --- 2. MAGNETIC BUTTONS - Enhanced ---
+            const magnets = document.querySelectorAll('.mag-btn');
+            magnets.forEach(btn => {
+                btn.addEventListener('mousemove', (e) => {
+                    const rect = btn.getBoundingClientRect();
+                    const x = e.clientX - rect.left - rect.width / 2;
+                    const y = e.clientY - rect.top - rect.height / 2;
+
+                    // Pull button towards cursor with glow
+                    gsap.to(btn, {
+                        x: x * 0.3,
+                        y: y * 0.3,
+                        duration: 0.3,
+                        ease: 'power2.out'
+                    });
+
+                    // Add shimmer effect on hover
+                    if (!btn.classList.contains('shimmer')) {
+                        btn.classList.add('shimmer');
+                    }
+                });
+                btn.addEventListener('mouseleave', () => {
+                    // Snap back elastic - smoother
+                    gsap.to(btn, {
+                        x: 0,
+                        y: 0,
+                        duration: 0.7,
+                        ease: 'elastic.out(1, 0.4)'
+                    });
+                    btn.classList.remove('shimmer');
+                });
+                btn.addEventListener('click', () => {
+                    // Click feedback with ripple
+                    gsap.to(btn, {
+                        scale: 0.92,
+                        duration: 0.1,
+                        yoyo: true,
+                        repeat: 1,
+                        ease: 'power2.inOut'
+                    });
+
+                    // Create ripple effect
+                    createRipple(e, btn);
+                });
+            });
+
+            // Ripple effect function
+            function createRipple(event, button) {
+                const ripple = document.createElement('span');
+                const rect = button.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = event.clientX - rect.left - size / 2;
+                const y = event.clientY - rect.top - size / 2;
+
+                ripple.style.width = ripple.style.height = size + 'px';
+                ripple.style.left = x + 'px';
+                ripple.style.top = y + 'px';
+                ripple.style.position = 'absolute';
+                ripple.style.borderRadius = '50%';
+                ripple.style.background = 'rgba(255, 255, 255, 0.6)';
+                ripple.style.transform = 'scale(0)';
+                ripple.style.pointerEvents = 'none';
+                ripple.style.zIndex = '1000';
+
+                button.appendChild(ripple);
+
+                gsap.to(ripple, {
+                    scale: 2,
+                    opacity: 0,
+                    duration: 0.6,
+                    ease: 'power2.out',
+                    onComplete: () => ripple.remove()
+                });
+            }
+
+            // PREMIUM CURTAIN CONTROL SYSTEM - Perfect Synchronization
+            function openCurtain(duration = 0.9, delay = 0) {
+                const left = document.getElementById('curtain-left');
+                const right = document.getElementById('curtain-right');
+                if (!left || !right) return gsap.timeline();
+
+                return gsap.to([left, right], {
+                    x: (i) => i === 0 ? '-100%' : '100%',
+                    rotationY: -20,
+                    opacity: 0.9,
+                    duration: duration,
+                    delay: delay,
+                    ease: "power3.inOut"
+                });
+            }
+
+            function closeCurtain(duration = 0.7, delay = 0) {
+                const left = document.getElementById('curtain-left');
+                const right = document.getElementById('curtain-right');
+                if (!left || !right) return gsap.timeline();
+
+                // Ensure curtains start from open position
+                gsap.set([left, right], {
+                    x: (i) => i === 0 ? '-100%' : '100%',
+                    rotationY: -20,
+                    opacity: 0.9
+                });
+
+                return gsap.to([left, right], {
+                    x: '0%',
+                    rotationY: 0,
+                    opacity: 1,
+                    duration: duration,
+                    delay: delay,
+                    ease: "power3.inOut"
+                });
+            }
+
+            // ORCHESTRATED TRANSITION PARTICLES
+            function createTransitionParticles(count = 30) {
+                const particlesContainer = document.getElementById('transition-particles');
+                particlesContainer.innerHTML = '';
+
+                const colors = ['#ff4081', '#ff80ab', '#ffd600', '#ff6ec7', '#ff9ff3'];
+
+                for (let i = 0; i < count; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'transition-particle';
+
+                    const color = colors[Math.floor(Math.random() * colors.length)];
+                    particle.style.backgroundColor = color;
+                    particle.style.boxShadow = `0 0 10px ${color}`;
+                    particle.style.left = Math.random() * 100 + '%';
+                    particle.style.top = Math.random() * 100 + '%';
+                    particle.style.opacity = '0';
+
+                    particlesContainer.appendChild(particle);
+
+                    // Orchestrated particle animation
+                    const angle = Math.random() * Math.PI * 2;
+                    const distance = 100 + Math.random() * 200;
+                    const delay = Math.random() * 0.3;
+
+                    gsap.to(particle, {
+                        opacity: [0, 1, 0],
+                        x: Math.cos(angle) * distance,
+                        y: Math.sin(angle) * distance,
+                        scale: [0, 1.5, 0],
+                        rotation: Math.random() * 720,
+                        duration: 1 + Math.random() * 0.5,
+                        delay: delay,
+                        ease: "power2.out",
+                        onComplete: () => particle.remove()
+                    });
+                }
+            }
+
+            // --- 3. ANIMATION & NAV --- PREMIUM ORCHESTRATED ENTRANCE
+            function startExperience() {
+                const container = document.querySelector('.container');
+                const leftPanel = document.getElementById('curtain-left');
+                const rightPanel = document.getElementById('curtain-right');
+
+                // Initial curtain state - closed
+                gsap.set([leftPanel, rightPanel], {
                     x: '0%',
                     rotationY: 0,
                     opacity: 1
                 });
-            }
-        });
 
-        // 2. LIVING IMAGES (Breathing) - Smoother, more subtle
-        gsap.to(".img-container img", {
-            y: -8,
-            duration: 2.5,
-            yoyo: true,
-            repeat: -1,
-            ease: "sine.inOut"
-        });
+                // Fade out overlay with perfect timing
+                const masterTimeline = gsap.timeline({ defaults: { ease: "power2.out" } });
 
-        // --- 1. HOLOGRAPHIC TILT & SHINE (HIGH EFFORT) ---
-        const container = document.getElementById('main-container');
-        const sheen = document.querySelector('.holo-sheen');
-        const cursorFollower = document.getElementById('cursor-follower');
-
-        // Progress tracking
-        const stepOrder = ['step-1', 'step-2', 'step-3', 'step-4', 'step-5'];
-        let currentStepIndex = 0;
-
-        function updateProgress(stepId) {
-            const index = stepOrder.indexOf(stepId);
-            if (index !== -1) {
-                currentStepIndex = index;
-                const progress = ((index + 1) / stepOrder.length) * 100;
-                gsap.to('#progress-bar', {
-                    width: progress + '%',
+                masterTimeline.to('#music-overlay', {
+                    opacity: 0,
+                    scale: 0.95,
                     duration: 0.6,
-                    ease: 'power2.out'
-                });
+                    onComplete: () => {
+                        document.getElementById('music-overlay').style.display = 'none';
+                    }
+                })
+                    // Reveal container behind curtain
+                    .set('.container', { visibility: 'visible' })
+                    .call(() => {
+                        document.getElementById('main-container').classList.remove('hidden');
+                    })
+                    .set('#main-container', { visibility: 'visible' })
+                    .set('#music-btn', { visibility: 'visible' })
+                    // Open curtain with dramatic effect - perfectly synchronized
+                    .add(openCurtain(0.9, 0), "-=0.3")
+                    // Synchronized container entrance
+                    .from('.container', {
+                        scale: 0.85,
+                        rotation: -3,
+                        opacity: 0,
+                        y: 40,
+                        duration: 1.1,
+                        ease: "back.out(1.4)"
+                    }, "-=0.5")
+                    // Image entrance perfectly timed
+                    .fromTo('#step-1 img', {
+                        scale: 0.6,
+                        y: 50,
+                        opacity: 0,
+                        rotation: -5
+                    }, {
+                        scale: 1,
+                        y: 0,
+                        opacity: 1,
+                        rotation: 0,
+                        duration: 1,
+                        ease: "back.out(1.7)",
+                        onComplete: initEasterEgg // Initialize Secret
+                    }, "-=0.7")
+                    // Text reveal - perfectly orchestrated
+                    .to('#step-1 .char', {
+                        opacity: 1,
+                        y: 0,
+                        scale: [0.8, 1],
+                        stagger: {
+                            amount: 0.7,
+                            from: "start"
+                        },
+                        duration: 0.15,
+                        ease: "back.out(1.8)"
+                    }, "-=0.6")
+                    // Buttons entrance - final flourish
+                    .from('#step-1 .btn', {
+                        opacity: 0,
+                        scale: 0.7,
+                        y: 30,
+                        rotation: -10,
+                        stagger: {
+                            amount: 0.2,
+                            from: "start"
+                        },
+                        duration: 0.7,
+                        ease: "back.out(2.4)"
+                    }, "-=0.4")
+                    // Final touches
+                    .to(() => {
+                        container.classList.add('entered');
+                        updateProgress('step-1');
+                        document.getElementById('main-container').classList.remove('hidden');
+                        document.getElementById('music-btn').classList.remove('hidden');
+                    }, { duration: 0 })
+                    // Particle burst at peak moment - synchronized celebration
+                    .call(() => {
+                        createTransitionParticles(20);
+                    }, null, null, "-=0.5")
+                    // Enhanced depth - add glow effect at perfect moment
+                    .to('.container', {
+                        boxShadow: '0 20px 60px rgba(255, 64, 129, 0.25), 0 0 100px rgba(255, 64, 129, 0.15)',
+                        duration: 0.8,
+                        ease: "power2.out"
+                    }, "-=0.3");
+
+                playMusic();
             }
-        }
 
-        // PERFORMANT MOUSE MOVEMENT HANDLING
-        const xTo = gsap.quickTo(cursorFollower, "x", { duration: 0.1, ease: "power2.out" });
-        const yTo = gsap.quickTo(cursorFollower, "y", { duration: 0.1, ease: "power2.out" });
+            // NAVIGATION ENGINE - PREMIUM ORCHESTRATED TRANSITIONS
+            function navigate(fromId, toId) {
+                const masterTL = gsap.timeline({ defaults: { ease: "power2.inOut" } });
 
-        // Tilt Setters
-        const tiltY = gsap.quickTo(container, "rotationY", { duration: 0.4, ease: "power2.out" });
-        const tiltX = gsap.quickTo(container, "rotationX", { duration: 0.4, ease: "power2.out" });
-
-        // Throttle Fairy Dust
-        let lastDustTime = 0;
-        const dustInterval = 50; // ms
-
-        document.addEventListener('mousemove', (e) => {
-            // optimized cursor movement
-            xTo(e.clientX);
-            yTo(e.clientY);
-
-            // Throttled Fairy Dust
-            const now = Date.now();
-            if (now - lastDustTime > 100) { // OPTIMIZED: Increased throttle
-                createFairyDust(e.pageX, e.pageY);
-                lastDustTime = now;
-            }
-
-            // Custom Cursor - Enhanced hover detection
-            const target = e.target;
-            const isButton = target.classList.contains('btn') || target.closest('.btn');
-            const isInteractive = target.classList.contains('interactive-area') || target.closest('.interactive-area');
-
-            if (isButton || isInteractive) {
-                cursorFollower.classList.add('hover-btn');
-            } else {
-                cursorFollower.classList.remove('hover-btn');
-            }
-
-            // Set CSS Variables (Keep minimal)
-            const xNormal = (e.clientX / window.innerWidth - 0.5) * 2; // -1 to 1
-            const yNormal = (e.clientY / window.innerHeight - 0.5) * 2;
-
-            document.documentElement.style.setProperty('--mouse-x', xNormal);
-            document.documentElement.style.setProperty('--mouse-y', yNormal);
-            document.documentElement.style.setProperty('--cursor-x', e.clientX + 'px');
-            document.documentElement.style.setProperty('--cursor-y', e.clientY + 'px');
-
-            // Performant Tilt using quickTo
-            tiltY(xNormal * 12); // Slightly tuned down from 15 for smoothness
-            tiltX(-yNormal * 12);
-
-            // Debounced/Lighter Parallax
-            gsap.to(".split-text", {
-                x: xNormal * 20,
-                y: yNormal * 20,
-                duration: 0.5,
-                overwrite: 'auto',
-                ease: "power1.out"
-            });
-
-            gsap.to(".btn-group, .btn", {
-                x: xNormal * 10,
-                y: yNormal * 10,
-                duration: 0.5,
-                overwrite: 'auto',
-                ease: "power1.out"
-            });
-
-            // Holographic Sheen
-            gsap.to(sheen, {
-                x: -xNormal * 400,
-                y: -yNormal * 400,
-                duration: 0.5,
-                overwrite: 'auto',
-                ease: 'power1.out'
-            });
-        });
-
-        // --- MOBILE DEVICE ORIENTATION SUPPORT ---
-        window.addEventListener('deviceorientation', (e) => {
-            if (window.innerWidth >= 768) return; // Disable on desktop if it somehow fires
-
-            // Gamma: Left/Right tilt (-90 to 90)
-            // Beta: Front/Back tilt (-180 to 180). Holding phone upright is ~45 to 90.
-
-            // Normalize Gamma (Left/Right)
-            // Clamp between -45 and 45 for better control
-            let gamma = e.gamma || 0;
-            if (gamma > 45) gamma = 45;
-            if (gamma < -45) gamma = -45;
-            const xNormal = gamma / 45; // -1 to 1
-
-            // Normalize Beta (Front/Back)
-            // Center around 60 degrees (typical holding angle)
-            let beta = e.beta || 0;
-            // We want +/- 45 degrees from 60 (i.e., 15 to 105)
-            const betaCenter = 60;
-            let betaDelta = beta - betaCenter;
-            if (betaDelta > 45) betaDelta = 45;
-            if (betaDelta < -45) betaDelta = -45;
-            const yNormal = betaDelta / 45; // -1 to 1
-
-            // Update CSS Variables for lighting
-            document.documentElement.style.setProperty('--mouse-x', xNormal);
-            document.documentElement.style.setProperty('--mouse-y', yNormal);
-
-            // Apply Tilt
-            tiltY(xNormal * 12);
-            tiltX(-yNormal * 12);
-
-            // Apply Parallax (Reuse same logic as mousemove)
-            gsap.to(".split-text", {
-                x: xNormal * 20,
-                y: yNormal * 20,
-                duration: 0.5,
-                overwrite: 'auto',
-                ease: "power1.out"
-            });
-
-            gsap.to(".btn-group, .btn", {
-                x: xNormal * 10,
-                y: yNormal * 10,
-                duration: 0.5,
-                overwrite: 'auto',
-                ease: "power1.out"
-            });
-
-            // Holographic Sheen
-            gsap.to(sheen, {
-                x: -xNormal * 400,
-                y: -yNormal * 400,
-                duration: 0.5,
-                overwrite: 'auto',
-                ease: 'power1.out'
-            });
-        });
-
-
-        // --- 2. MAGNETIC BUTTONS - Enhanced ---
-        const magnets = document.querySelectorAll('.mag-btn');
-        magnets.forEach(btn => {
-            btn.addEventListener('mousemove', (e) => {
-                const rect = btn.getBoundingClientRect();
-                const x = e.clientX - rect.left - rect.width / 2;
-                const y = e.clientY - rect.top - rect.height / 2;
-
-                // Pull button towards cursor with glow
-                gsap.to(btn, {
-                    x: x * 0.3,
-                    y: y * 0.3,
-                    duration: 0.3,
-                    ease: 'power2.out'
-                });
-
-                // Add shimmer effect on hover
-                if (!btn.classList.contains('shimmer')) {
-                    btn.classList.add('shimmer');
-                }
-            });
-            btn.addEventListener('mouseleave', () => {
-                // Snap back elastic - smoother
-                gsap.to(btn, {
-                    x: 0,
-                    y: 0,
-                    duration: 0.7,
-                    ease: 'elastic.out(1, 0.4)'
-                });
-                btn.classList.remove('shimmer');
-            });
-            btn.addEventListener('click', () => {
-                // Click feedback with ripple
-                gsap.to(btn, {
+                // PHASE 1: Exit current content with orchestrated movement
+                masterTL.to(`#${fromId}`, {
+                    x: -60,
+                    opacity: 0,
                     scale: 0.92,
-                    duration: 0.1,
+                    rotation: -2,
+                    duration: 0.45,
+                    ease: "power3.in"
+                })
+                    // Simultaneous curtain close - dramatic effect
+                    .add(closeCurtain(0.6, 0), "-=0.25")
+                    // Particle burst during transition
+                    .call(() => {
+                        createTransitionParticles(25);
+                    }, null, null, "-=0.2")
+                    // Content swap at curtain peak
+                    .call(() => {
+                        document.getElementById(fromId).classList.add('hidden');
+                        document.getElementById(toId).classList.remove('hidden');
+
+                        // Reset new content for entrance
+                        gsap.set(`#${toId}`, {
+                            x: 60,
+                            opacity: 0,
+                            scale: 0.92,
+                            rotation: 2
+                        });
+                        gsap.set(`#${toId} img`, {
+                            scale: 0.8,
+                            rotation: -10,
+                            opacity: 0,
+                            y: 30
+                        });
+                        gsap.set(`#${toId} .btn`, {
+                            scale: 0.75,
+                            opacity: 0,
+                            y: 25,
+                            rotation: -5
+                        });
+                        gsap.set(`#${toId} .char`, {
+                            opacity: 0,
+                            y: 15,
+                            scale: 0.85
+                        });
+                    }, null, null, "-=0.3");
+
+                // PHASE 2: Curtain opens revealing new content
+                masterTL.add(openCurtain(0.75, 0), "-=0.2")
+                    // New content entrance - perfectly synchronized
+                    .to(`#${toId}`, {
+                        x: 0,
+                        opacity: 1,
+                        scale: 1,
+                        rotation: 0,
+                        duration: 0.75,
+                        ease: "back.out(1.3)"
+                    }, "-=0.5")
+                    // Image entrance - elastic and bouncy
+                    .to(`#${toId} img`, {
+                        scale: 1,
+                        rotation: 0,
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.95,
+                        ease: "elastic.out(1, 0.55)"
+                    }, "-=0.6")
+                    // Text reveal - cascading effect
+                    .to(`#${toId} .char`, {
+                        opacity: 1,
+                        y: 0,
+                        scale: 1,
+                        stagger: {
+                            amount: 0.6,
+                            from: "start"
+                        },
+                        duration: 0.14,
+                        ease: "back.out(1.6)"
+                    }, "-=0.7")
+                    // Buttons entrance - final touch
+                    .to(`#${toId} .btn`, {
+                        scale: 1,
+                        opacity: 1,
+                        y: 0,
+                        rotation: 0,
+                        stagger: {
+                            amount: 0.15,
+                            from: "start"
+                        },
+                        duration: 0.65,
+                        ease: "back.out(2.3)"
+                    }, "-=0.5")
+                    // Update progress at perfect moment
+                    .call(() => {
+                        updateProgress(toId);
+                    }, null, null, "-=0.3")
+                    // Final particle celebration
+                    .call(() => {
+                        createTransitionParticles(15);
+                    }, null, null, "-=0.4");
+
+                // Interactive elements setup - perfectly timed
+                masterTL.call(() => {
+                    if (toId === 'step-3' || toId === 'step-4') {
+                        const interactiveArea = document.querySelector(`#${toId} .interactive-area`);
+                        if (interactiveArea) {
+                            gsap.fromTo(interactiveArea,
+                                { scale: 0.9, opacity: 0 },
+                                {
+                                    scale: 1,
+                                    opacity: 1,
+                                    duration: 0.6,
+                                    ease: "back.out(2)",
+                                    onComplete: () => {
+                                        gsap.to(interactiveArea, {
+                                            scale: 1.05,
+                                            duration: 0.9,
+                                            repeat: -1,
+                                            yoyo: true,
+                                            ease: "sine.inOut"
+                                        });
+                                    }
+                                }
+                            );
+                        }
+                    }
+                    if (toId === 'step-3') {
+                        setTimeout(() => initGiftInteraction(), 100);
+                    }
+                    // NEW STEPS INITIALIZATION
+                    if (toId === 'step-collage') initCollage();
+                    if (toId === 'step-letter') initLetter();
+                    if (toId === 'step-wishes') initWishes();
+
+                }, null, null, "-=0.2");
+            }
+
+            // --- TENSION BUILD GIFT UNWRAP ---
+            function initGiftInteraction() {
+                let holdTimer = null;
+                const giftZone = document.getElementById('gift-zone');
+                const giftImg = document.querySelector('#step-3 img');
+
+                // Mouse Down: Start Shaking
+                const startUnwrap = (e) => {
+                    e.preventDefault(); // prevent click
+
+                    // Shake
+                    gsap.to(giftImg, { x: "+=5", y: "+=5", rotation: 5, duration: 0.1, repeat: -1, yoyo: true });
+                    // Scale Up (Tension)
+                    gsap.to(giftImg, { scale: 1.2, duration: 1.5, ease: "power1.in" });
+
+                    // Trigger after 1.5s
+                    holdTimer = setTimeout(() => {
+                        navigate('step-3', 'step-collage'); // Updated target
+                        // triggerGrandFinale(); // REMOVED: Save for the end
+                    }, 1500);
+                };
+
+                // Release: Reset
+                const resetGift = () => {
+                    if (holdTimer) clearTimeout(holdTimer);
+                    gsap.killTweensOf(giftImg);
+                    gsap.to(giftImg, { scale: 1, x: 0, y: 0, rotation: 0, duration: 0.5, ease: "elastic.out(1, 0.3)" });
+                };
+
+                giftZone.addEventListener('mousedown', startUnwrap);
+                giftZone.addEventListener('touchstart', startUnwrap);
+
+                giftZone.addEventListener('mouseup', resetGift);
+                giftZone.addEventListener('mouseleave', resetGift);
+                giftZone.addEventListener('touchend', resetGift);
+
+                // Remove simple onclick from HTML to avoid conflict
+                giftZone.onclick = null;
+            }
+
+            function takePhoto() {
+                // Smooth flash effect
+                gsap.to('#flash', {
+                    opacity: 0.9,
+                    duration: 0.08,
                     yoyo: true,
                     repeat: 1,
-                    ease: 'power2.inOut'
-                });
-
-                // Create ripple effect
-                createRipple(e, btn);
-            });
-        });
-
-        // Ripple effect function
-        function createRipple(event, button) {
-            const ripple = document.createElement('span');
-            const rect = button.getBoundingClientRect();
-            const size = Math.max(rect.width, rect.height);
-            const x = event.clientX - rect.left - size / 2;
-            const y = event.clientY - rect.top - size / 2;
-
-            ripple.style.width = ripple.style.height = size + 'px';
-            ripple.style.left = x + 'px';
-            ripple.style.top = y + 'px';
-            ripple.style.position = 'absolute';
-            ripple.style.borderRadius = '50%';
-            ripple.style.background = 'rgba(255, 255, 255, 0.6)';
-            ripple.style.transform = 'scale(0)';
-            ripple.style.pointerEvents = 'none';
-            ripple.style.zIndex = '1000';
-
-            button.appendChild(ripple);
-
-            gsap.to(ripple, {
-                scale: 2,
-                opacity: 0,
-                duration: 0.6,
-                ease: 'power2.out',
-                onComplete: () => ripple.remove()
-            });
-        }
-
-        // PREMIUM CURTAIN CONTROL SYSTEM - Perfect Synchronization
-        function openCurtain(duration = 0.9, delay = 0) {
-            const left = document.getElementById('curtain-left');
-            const right = document.getElementById('curtain-right');
-            if (!left || !right) return gsap.timeline();
-
-            return gsap.to([left, right], {
-                x: (i) => i === 0 ? '-100%' : '100%',
-                rotationY: -20,
-                opacity: 0.9,
-                duration: duration,
-                delay: delay,
-                ease: "power3.inOut"
-            });
-        }
-
-        function closeCurtain(duration = 0.7, delay = 0) {
-            const left = document.getElementById('curtain-left');
-            const right = document.getElementById('curtain-right');
-            if (!left || !right) return gsap.timeline();
-
-            // Ensure curtains start from open position
-            gsap.set([left, right], {
-                x: (i) => i === 0 ? '-100%' : '100%',
-                rotationY: -20,
-                opacity: 0.9
-            });
-
-            return gsap.to([left, right], {
-                x: '0%',
-                rotationY: 0,
-                opacity: 1,
-                duration: duration,
-                delay: delay,
-                ease: "power3.inOut"
-            });
-        }
-
-        // ORCHESTRATED TRANSITION PARTICLES
-        function createTransitionParticles(count = 30) {
-            const particlesContainer = document.getElementById('transition-particles');
-            particlesContainer.innerHTML = '';
-
-            const colors = ['#ff4081', '#ff80ab', '#ffd600', '#ff6ec7', '#ff9ff3'];
-
-            for (let i = 0; i < count; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'transition-particle';
-
-                const color = colors[Math.floor(Math.random() * colors.length)];
-                particle.style.backgroundColor = color;
-                particle.style.boxShadow = `0 0 10px ${color}`;
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.top = Math.random() * 100 + '%';
-                particle.style.opacity = '0';
-
-                particlesContainer.appendChild(particle);
-
-                // Orchestrated particle animation
-                const angle = Math.random() * Math.PI * 2;
-                const distance = 100 + Math.random() * 200;
-                const delay = Math.random() * 0.3;
-
-                gsap.to(particle, {
-                    opacity: [0, 1, 0],
-                    x: Math.cos(angle) * distance,
-                    y: Math.sin(angle) * distance,
-                    scale: [0, 1.5, 0],
-                    rotation: Math.random() * 720,
-                    duration: 1 + Math.random() * 0.5,
-                    delay: delay,
-                    ease: "power2.out",
-                    onComplete: () => particle.remove()
-                });
-            }
-        }
-
-        // --- 3. ANIMATION & NAV --- PREMIUM ORCHESTRATED ENTRANCE
-        function startExperience() {
-            const container = document.querySelector('.container');
-            const leftPanel = document.getElementById('curtain-left');
-            const rightPanel = document.getElementById('curtain-right');
-
-            // Initial curtain state - closed
-            gsap.set([leftPanel, rightPanel], {
-                x: '0%',
-                rotationY: 0,
-                opacity: 1
-            });
-
-            // Fade out overlay with perfect timing
-            const masterTimeline = gsap.timeline({ defaults: { ease: "power2.out" } });
-
-            masterTimeline.to('#music-overlay', {
-                opacity: 0,
-                scale: 0.95,
-                duration: 0.6,
-                onComplete: () => {
-                    document.getElementById('music-overlay').style.display = 'none';
-                }
-            })
-                // Reveal container behind curtain
-                .set('.container', { visibility: 'visible' })
-                .call(() => {
-                    document.getElementById('main-container').classList.remove('hidden');
-                })
-                .set('#main-container', { visibility: 'visible' })
-                .set('#music-btn', { visibility: 'visible' })
-                // Open curtain with dramatic effect - perfectly synchronized
-                .add(openCurtain(0.9, 0), "-=0.3")
-                // Synchronized container entrance
-                .from('.container', {
-                    scale: 0.85,
-                    rotation: -3,
-                    opacity: 0,
-                    y: 40,
-                    duration: 1.1,
-                    ease: "back.out(1.4)"
-                }, "-=0.5")
-                // Image entrance perfectly timed
-                .fromTo('#step-1 img', {
-                    scale: 0.6,
-                    y: 50,
-                    opacity: 0,
-                    rotation: -5
-                }, {
-                    scale: 1,
-                    y: 0,
-                    opacity: 1,
-                    rotation: 0,
-                    duration: 1,
-                    ease: "back.out(1.7)",
-                    onComplete: initEasterEgg // Initialize Secret
-                }, "-=0.7")
-                // Text reveal - perfectly orchestrated
-                .to('#step-1 .char', {
-                    opacity: 1,
-                    y: 0,
-                    scale: [0.8, 1],
-                    stagger: {
-                        amount: 0.7,
-                        from: "start"
-                    },
-                    duration: 0.15,
-                    ease: "back.out(1.8)"
-                }, "-=0.6")
-                // Buttons entrance - final flourish
-                .from('#step-1 .btn', {
-                    opacity: 0,
-                    scale: 0.7,
-                    y: 30,
-                    rotation: -10,
-                    stagger: {
-                        amount: 0.2,
-                        from: "start"
-                    },
-                    duration: 0.7,
-                    ease: "back.out(2.4)"
-                }, "-=0.4")
-                // Final touches
-                .to(() => {
-                    container.classList.add('entered');
-                    updateProgress('step-1');
-                    document.getElementById('main-container').classList.remove('hidden');
-                    document.getElementById('music-btn').classList.remove('hidden');
-                }, { duration: 0 })
-                // Particle burst at peak moment - synchronized celebration
-                .call(() => {
-                    createTransitionParticles(20);
-                }, null, null, "-=0.5")
-                // Enhanced depth - add glow effect at perfect moment
-                .to('.container', {
-                    boxShadow: '0 20px 60px rgba(255, 64, 129, 0.25), 0 0 100px rgba(255, 64, 129, 0.15)',
-                    duration: 0.8,
-                    ease: "power2.out"
-                }, "-=0.3");
-
-            playMusic();
-        }
-
-        // NAVIGATION ENGINE - PREMIUM ORCHESTRATED TRANSITIONS
-        function navigate(fromId, toId) {
-            const masterTL = gsap.timeline({ defaults: { ease: "power2.inOut" } });
-
-            // PHASE 1: Exit current content with orchestrated movement
-            masterTL.to(`#${fromId}`, {
-                x: -60,
-                opacity: 0,
-                scale: 0.92,
-                rotation: -2,
-                duration: 0.45,
-                ease: "power3.in"
-            })
-                // Simultaneous curtain close - dramatic effect
-                .add(closeCurtain(0.6, 0), "-=0.25")
-                // Particle burst during transition
-                .call(() => {
-                    createTransitionParticles(25);
-                }, null, null, "-=0.2")
-                // Content swap at curtain peak
-                .call(() => {
-                    document.getElementById(fromId).classList.add('hidden');
-                    document.getElementById(toId).classList.remove('hidden');
-
-                    // Reset new content for entrance
-                    gsap.set(`#${toId}`, {
-                        x: 60,
-                        opacity: 0,
-                        scale: 0.92,
-                        rotation: 2
-                    });
-                    gsap.set(`#${toId} img`, {
-                        scale: 0.8,
-                        rotation: -10,
-                        opacity: 0,
-                        y: 30
-                    });
-                    gsap.set(`#${toId} .btn`, {
-                        scale: 0.75,
-                        opacity: 0,
-                        y: 25,
-                        rotation: -5
-                    });
-                    gsap.set(`#${toId} .char`, {
-                        opacity: 0,
-                        y: 15,
-                        scale: 0.85
-                    });
-                }, null, null, "-=0.3");
-
-            // PHASE 2: Curtain opens revealing new content
-            masterTL.add(openCurtain(0.75, 0), "-=0.2")
-                // New content entrance - perfectly synchronized
-                .to(`#${toId}`, {
-                    x: 0,
-                    opacity: 1,
-                    scale: 1,
-                    rotation: 0,
-                    duration: 0.75,
-                    ease: "back.out(1.3)"
-                }, "-=0.5")
-                // Image entrance - elastic and bouncy
-                .to(`#${toId} img`, {
-                    scale: 1,
-                    rotation: 0,
-                    opacity: 1,
-                    y: 0,
-                    duration: 0.95,
-                    ease: "elastic.out(1, 0.55)"
-                }, "-=0.6")
-                // Text reveal - cascading effect
-                .to(`#${toId} .char`, {
-                    opacity: 1,
-                    y: 0,
-                    scale: 1,
-                    stagger: {
-                        amount: 0.6,
-                        from: "start"
-                    },
-                    duration: 0.14,
-                    ease: "back.out(1.6)"
-                }, "-=0.7")
-                // Buttons entrance - final touch
-                .to(`#${toId} .btn`, {
-                    scale: 1,
-                    opacity: 1,
-                    y: 0,
-                    rotation: 0,
-                    stagger: {
-                        amount: 0.15,
-                        from: "start"
-                    },
-                    duration: 0.65,
-                    ease: "back.out(2.3)"
-                }, "-=0.5")
-                // Update progress at perfect moment
-                .call(() => {
-                    updateProgress(toId);
-                }, null, null, "-=0.3")
-                // Final particle celebration
-                .call(() => {
-                    createTransitionParticles(15);
-                }, null, null, "-=0.4");
-
-            // Interactive elements setup - perfectly timed
-            masterTL.call(() => {
-                if (toId === 'step-3' || toId === 'step-4') {
-                    const interactiveArea = document.querySelector(`#${toId} .interactive-area`);
-                    if (interactiveArea) {
-                        gsap.fromTo(interactiveArea,
-                            { scale: 0.9, opacity: 0 },
-                            {
-                                scale: 1,
-                                opacity: 1,
-                                duration: 0.6,
-                                ease: "back.out(2)",
-                                onComplete: () => {
-                                    gsap.to(interactiveArea, {
-                                        scale: 1.05,
-                                        duration: 0.9,
-                                        repeat: -1,
-                                        yoyo: true,
-                                        ease: "sine.inOut"
-                                    });
-                                }
-                            }
-                        );
-                    }
-                }
-                if (toId === 'step-3') {
-                    setTimeout(() => initGiftInteraction(), 100);
-                }
-                // NEW STEPS INITIALIZATION
-                if (toId === 'step-collage') initCollage();
-                if (toId === 'step-letter') initLetter();
-                if (toId === 'step-wishes') initWishes();
-
-            }, null, null, "-=0.2");
-        }
-
-        // --- TENSION BUILD GIFT UNWRAP ---
-        function initGiftInteraction() {
-            let holdTimer = null;
-            const giftZone = document.getElementById('gift-zone');
-            const giftImg = document.querySelector('#step-3 img');
-
-            // Mouse Down: Start Shaking
-            const startUnwrap = (e) => {
-                e.preventDefault(); // prevent click
-
-                // Shake
-                gsap.to(giftImg, { x: "+=5", y: "+=5", rotation: 5, duration: 0.1, repeat: -1, yoyo: true });
-                // Scale Up (Tension)
-                gsap.to(giftImg, { scale: 1.2, duration: 1.5, ease: "power1.in" });
-
-                // Trigger after 1.5s
-                holdTimer = setTimeout(() => {
-                    navigate('step-3', 'step-collage'); // Updated target
-                    // triggerGrandFinale(); // REMOVED: Save for the end
-                }, 1500);
-            };
-
-            // Release: Reset
-            const resetGift = () => {
-                if (holdTimer) clearTimeout(holdTimer);
-                gsap.killTweensOf(giftImg);
-                gsap.to(giftImg, { scale: 1, x: 0, y: 0, rotation: 0, duration: 0.5, ease: "elastic.out(1, 0.3)" });
-            };
-
-            giftZone.addEventListener('mousedown', startUnwrap);
-            giftZone.addEventListener('touchstart', startUnwrap);
-
-            giftZone.addEventListener('mouseup', resetGift);
-            giftZone.addEventListener('mouseleave', resetGift);
-            giftZone.addEventListener('touchend', resetGift);
-
-            // Remove simple onclick from HTML to avoid conflict
-            giftZone.onclick = null;
-        }
-
-        function takePhoto() {
-            // Smooth flash effect
-            gsap.to('#flash', {
-                opacity: 0.9,
-                duration: 0.08,
-                yoyo: true,
-                repeat: 1,
-                ease: 'power2.inOut',
-                onComplete: () => {
-                    navigate('step-4', 'step-5');
-                    setTimeout(() => {
-                        document.getElementById('final-photo').classList.add('developed');
-
-                        // Steamy Glass Effect
-                        initSteamyGlass();
-
-                        // Clear text initially
-                        document.getElementById('typewriter-text').textContent = '';
-
-                        // Smooth photo reveal (Static under fog)
-                        gsap.from('#final-photo', {
-                            scale: 0.9,
-                            opacity: 0,
-                            duration: 1,
-                            ease: 'power2.out'
-                        });
-
-                        // NOTE: Draggable is not initialized here anymore to prevent conflict
-                    }, 600);
-                }
-            });
-        }
-
-        // --- DRAGGABLE FINALE ---
-        function initDraggableFinale() {
-            Draggable.create(".polaroid", {
-                type: "x,y",
-                edgeResistance: 0.65,
-                bounds: "body",
-                inertia: true,
-                onDragStart: function () {
-                    gsap.to(this.target, { scale: 1.05, boxShadow: "0 50px 100px rgba(0,0,0,0.3)", duration: 0.2 });
-                },
-                onDragEnd: function () {
-                    gsap.to(this.target, { scale: 1, boxShadow: "0 30px 60px rgba(0,0,0,0.2)", duration: 0.2 });
-                }
-            });
-        }
-
-        // --- 4. FAIRY DUST ENGINE ---
-        function createFairyDust(x, y) {
-            const colors = ['#ff4081', '#ff80ab', '#ffd700', '#00e676', '#aa00ff'];
-            const dust = document.createElement('div');
-            dust.className = 'fairy-dust';
-            dust.style.left = x + 'px';
-            dust.style.top = y + 'px';
-            dust.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-            dust.style.boxShadow = `0 0 6px ${dust.style.backgroundColor}`;
-            document.body.appendChild(dust);
-
-            gsap.to(dust, {
-                y: y + Math.random() * 50 + 20,
-                x: x + (Math.random() - 0.5) * 50,
-                opacity: 0,
-                scale: 0,
-                duration: Math.random() * 0.8 + 0.3,
-                onComplete: () => dust.remove()
-            });
-        }
-
-        // --- 5. AUDIO & PARTICLES ---
-        const music = document.getElementById("bg-music");
-        const musicBtn = document.getElementById("music-btn");
-        let isPlaying = false;
-        function playMusic() { music.play().then(() => { isPlaying = true; musicBtn.classList.add('music-playing'); }).catch(console.log); }
-        function toggleMusic() {
-            if (isPlaying) { music.pause(); musicBtn.classList.remove('music-playing'); musicBtn.style.opacity = '0.5'; }
-            else { music.play(); musicBtn.classList.add('music-playing'); musicBtn.style.opacity = '1'; }
-            isPlaying = !isPlaying;
-        }
-
-        // Particles
-        // Particles - Optimized & Distributed
-        const pc = document.getElementById('particles');
-        const particleCount = window.innerWidth < 768 ? 30 : 60; // Responsive count
-
-        for (let i = 0; i < particleCount; i++) {
-            const p = document.createElement('div');
-            p.className = Math.random() > 0.6 ? 'heart-particle' : 'bubble';
-            if (p.className.includes('heart')) p.innerHTML = '❤';
-            else { const s = Math.random() * 40 + 10 + 'px'; p.style.width = s; p.style.height = s; }
-            pc.appendChild(p);
-
-            // GSAP Floating with Random Refreshes
-            gsap.fromTo(p,
-                {
-                    x: () => Math.random() * window.innerWidth, // Randomize on every repeat
-                    y: window.innerHeight + 100,
-                    opacity: 0
-                },
-                {
-                    y: -150,
-                    x: () => `+=${(Math.random() - 0.5) * 150}`, // Random drift
-                    opacity: () => Math.random() * 0.5 + 0.3,
-                    duration: () => Math.random() * 10 + 15, // Slower, more peaceful
-                    repeat: -1,
-                    repeatRefresh: true, // IMPORTANT: New random values on repeat!
-                    ease: "none",
-                    delay: Math.random() * -25 // Start at different times
-                }
-            );
-        }
-
-        // Grand Finale (Fireworks + Cannons)
-        function triggerGrandFinale() {
-            launchConfettiCannon();
-            launchFireworks();
-
-            // Add pulse effect to photo
-            const p = document.querySelector('.polaroid');
-            if (p) {
-                p.classList.add('celebrating');
-                setTimeout(() => p.classList.remove('celebrating'), 3000); // Pulse for 3s
-            }
-        }
-
-        function launchConfettiCannon() {
-            // Define custom shapes (You can use simple emojis or SVG URLs)
-            const shapes = ['❤️', '🎀', '✨', '😻', '🌸'];
-
-            // CELEBRATION: Increased count slightly for more impact
-            for (let i = 0; i < 150; i++) {
-                const c = document.createElement('div');
-                c.style.position = 'fixed';
-                c.style.zIndex = '1000';
-
-                // Randomly pick a shape
-                const shape = shapes[Math.floor(Math.random() * shapes.length)];
-                c.innerText = shape;
-                c.style.fontSize = Math.random() * 20 + 10 + 'px'; // Varied sizes
-                c.style.userSelect = 'none';
-                c.style.pointerEvents = 'none'; // Ensure they don't block clicks
-
-                const startX = Math.random() > 0.5 ? Math.random() * 20 : 80 + Math.random() * 20;
-                c.style.left = startX + 'vw';
-                c.style.bottom = '-20px';
-
-                document.body.appendChild(c);
-
-                gsap.to(c, {
-                    x: (Math.random() - 0.5) * 800,
-                    y: -Math.random() * window.innerHeight * 1.2,
-                    rotation: Math.random() * 720,
-                    opacity: 0,
-                    duration: Math.random() * 3 + 2,
-                    ease: "power2.out",
-                    onComplete: () => c.remove()
-                });
-            }
-        }
-
-        // --- TYPEWRITER EFFECT ---
-        function typeWriterEffect(text, elementId) {
-            const element = document.getElementById(elementId);
-            if (!element) return;
-            element.innerHTML = ''; // Clear existing text
-            const chars = text.split('');
-
-            // Create a timeline for typing
-            const tl = gsap.timeline();
-
-            chars.forEach((char, index) => {
-                tl.to(element, {
-                    duration: 0.1, // Typing speed
-                    textContent: element.textContent + char,
-                    snap: { textContent: 1 }, // Ensure whole characters
-                    onUpdate: function () {
-                        element.textContent = text.substring(0, index + 1);
-                    }
-                }, "+=0.05");
-            });
-        }
-
-        // --- STEAMY GLASS EFFECT (ROBUST FIX) ---
-        function initSteamyGlass() {
-            const img = document.getElementById('final-photo');
-            const wrapper = document.querySelector('.polaroid');
-
-            if (!img || !wrapper) return;
-
-            // Remove existing canvas if any (for replayability)
-            const existingCanvas = wrapper.querySelector('canvas');
-            if (existingCanvas) existingCanvas.remove();
-
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
-
-            // Setup Canvas overlay
-            // Match image exactly
-            const width = img.clientWidth || img.width;
-            const height = img.clientHeight || img.height;
-
-            canvas.width = width;
-            canvas.height = height;
-            canvas.style.position = 'absolute';
-            // Use same offset as image
-            canvas.style.top = img.offsetTop + 'px';
-            canvas.style.left = img.offsetLeft + 'px';
-            canvas.style.cursor = 'crosshair';
-            canvas.style.zIndex = '100'; // Make sure it's on top of everything
-            canvas.style.borderRadius = '5px';
-            canvas.style.touchAction = 'none'; // Prevent scrolling while rubbing
-
-            // Create the "Fog"
-            ctx.fillStyle = "rgba(255, 255, 255, 0.9)"; // Slightly thicker fog
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            // Add "Wipe me" text
-            ctx.font = "bold 24px 'Nunito', sans-serif";
-            ctx.fillStyle = "#ff4081";
-            ctx.textAlign = "center";
-            ctx.fillText("Rub to reveal... ❤️", canvas.width / 2, canvas.height / 2);
-
-            wrapper.appendChild(canvas);
-
-            // The Wiping Logic - Throttle for performance
-            let isDrawing = false;
-            let wipeCount = 0;
-            let isRevealed = false;
-
-            function wipe(x, y) {
-                const rect = canvas.getBoundingClientRect();
-                const mouseX = x - rect.left;
-                const mouseY = y - rect.top;
-
-                ctx.globalCompositeOperation = 'destination-out';
-                ctx.beginPath();
-                ctx.arc(mouseX, mouseY, 40, 0, Math.PI * 2); // Larger brush
-                ctx.fill();
-
-                // Track Progress
-                if (!isRevealed) {
-                    wipeCount++;
-                    if (wipeCount > 120) { // Threshold for reveal
-                        isRevealed = true;
-                        revealSecret();
-                    }
-                }
-            }
-
-            function revealSecret() {
-                // Fade out canvas
-                gsap.to(canvas, {
-                    opacity: 0,
-                    duration: 1.5,
-                    ease: "power2.out",
+                    ease: 'power2.inOut',
                     onComplete: () => {
-                        canvas.remove();
-                        // Enable Draggable ONLY after fog is gone
-                        initDraggableFinale();
+                        navigate('step-4', 'step-5');
+                        setTimeout(() => {
+                            document.getElementById('final-photo').classList.add('developed');
+
+                            // Steamy Glass Effect
+                            initSteamyGlass();
+
+                            // Clear text initially
+                            document.getElementById('typewriter-text').textContent = '';
+
+                            // Smooth photo reveal (Static under fog)
+                            gsap.from('#final-photo', {
+                                scale: 0.9,
+                                opacity: 0,
+                                duration: 1,
+                                ease: 'power2.out'
+                            });
+
+                            // NOTE: Draggable is not initialized here anymore to prevent conflict
+                        }, 600);
                     }
                 });
-
-                // Trigger Finale
-                setTimeout(() => {
-                    typeWriterEffect("I Love You, my Kuchupuchuuu ❤️\nHappy New Year 2026!", "typewriter-text");
-                    triggerGrandFinale();
-                }, 500);
             }
 
-            // Event Listeners - STOP PROPAGATION TO PREVENT DRAGGING
-            const startDrawing = (e) => {
-                isDrawing = true;
-                e.preventDefault(); // Stop default touch actions
-                e.stopPropagation(); // Stop bubbling to Draggable parent
-            };
-
-            const stopDrawing = (e) => {
-                isDrawing = false;
-                e.stopPropagation();
-            };
-
-            const draw = (e) => {
-                // Stop propagation immediately
-                e.stopPropagation();
-                if (isDrawing) {
-                    requestAnimationFrame(() => wipe(e.clientX, e.clientY));
-                }
-            };
-
-            // Mouse
-            canvas.addEventListener('mousedown', startDrawing);
-            canvas.addEventListener('mouseup', stopDrawing);
-            canvas.addEventListener('mouseleave', stopDrawing);
-            canvas.addEventListener('mousemove', draw);
-
-            // Touch
-            canvas.addEventListener('touchstart', startDrawing, { passive: false });
-            canvas.addEventListener('touchend', stopDrawing);
-            canvas.addEventListener('touchmove', (e) => {
-                e.preventDefault();
-                e.stopPropagation(); // CRITICAL
-                if (isDrawing) {
-                    const touch = e.touches[0];
-                    requestAnimationFrame(() => wipe(touch.clientX, touch.clientY));
-                }
-            }, { passive: false });
-        }
-
-        // --- EASTER EGG ---
-        function initEasterEgg() {
-            let noseClicks = 0;
-            const catImg = document.querySelector('#step-1 img'); // Target the first cat
-
-            if (!catImg) return;
-
-            // Remove previous listeners to avoid duplicates if re-run
-            // (Not easily done with anonymous functions, but logic is idempotent enough)
-
-            catImg.addEventListener('click', (e) => {
-                // Prevent navigation if clicking purely for easter egg? 
-                // The image itself isn't the nav button, but let's be safe.
-                e.preventDefault();
-                e.stopPropagation();
-
-                noseClicks++;
-
-                // Visual feedback
-                gsap.to(catImg, { scale: 0.95, duration: 0.1, yoyo: true, repeat: 1 });
-
-                if (noseClicks === 3) {
-                    // Trigger the Easter Egg
-                    showPremiumModal(`You found the secret Simu Jaiswalu!<br><br>You and I are the perfect match,<br>never believe anything else 🥺!!!<br><br>I love you 3000! ♾️💖`);
-
-                    // Or trigger a massive confetti explosion
-                    triggerGrandFinale();
-
-                    noseClicks = 0; // Reset
-                }
-            });
-        }
-
-        // --- PREMIUM MODAL LOGIC ---
-        function showPremiumModal(message) {
-            const modal = document.getElementById('secret-modal');
-            const modalText = document.getElementById('modal-text');
-            const modalContent = modal.querySelector('.premium-modal');
-
-            modalText.innerHTML = message;
-            modal.style.visibility = 'visible';
-            modal.style.opacity = '1';
-            modalContent.style.transform = 'scale(1) translateY(0)';
-        }
-
-        function closePremiumModal() {
-            const modal = document.getElementById('secret-modal');
-            const modalContent = modal.querySelector('.premium-modal');
-
-            modal.style.opacity = '0';
-            modalContent.style.transform = 'scale(0.8) translateY(20px)';
-
-            setTimeout(() => {
-                modal.style.visibility = 'hidden';
-            }, 400);
-        }
-
-        function launchFireworks() {
-            // CELEBRATION: More fireworks!
-            for (let i = 0; i < 12; i++) {
-                setTimeout(() => createFirework(Math.random() * 80 + 10, Math.random() * 60 + 10), i * 400);
+            // --- DRAGGABLE FINALE ---
+            function initDraggableFinale() {
+                Draggable.create(".polaroid", {
+                    type: "x,y",
+                    edgeResistance: 0.65,
+                    bounds: "body",
+                    inertia: true,
+                    onDragStart: function () {
+                        gsap.to(this.target, { scale: 1.05, boxShadow: "0 50px 100px rgba(0,0,0,0.3)", duration: 0.2 });
+                    },
+                    onDragEnd: function () {
+                        gsap.to(this.target, { scale: 1, boxShadow: "0 30px 60px rgba(0,0,0,0.2)", duration: 0.2 });
+                    }
+                });
             }
-        }
 
-        function createFirework(x, y) {
-            const colors = ['#ff0055', '#ffdd00', '#00ffaa', '#00ccff', '#ff00ff'];
-            const color = colors[Math.floor(Math.random() * colors.length)];
-            // OPTIMIZATION: Reduced particles per firework from 40 to 15
-            for (let i = 0; i < 15; i++) {
-                const p = document.createElement('div');
-                p.classList.add('firework-particle');
-                p.style.backgroundColor = color;
-                p.style.left = x + 'vw'; p.style.top = y + 'vh';
-                p.style.width = '6px'; p.style.height = '6px'; p.style.boxShadow = `0 0 10px ${color}`;
-                document.body.appendChild(p);
+            // --- 4. FAIRY DUST ENGINE ---
+            function createFairyDust(x, y) {
+                const colors = ['#ff4081', '#ff80ab', '#ffd700', '#00e676', '#aa00ff'];
+                const dust = document.createElement('div');
+                dust.className = 'fairy-dust';
+                dust.style.left = x + 'px';
+                dust.style.top = y + 'px';
+                dust.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                dust.style.boxShadow = `0 0 6px ${dust.style.backgroundColor}`;
+                document.body.appendChild(dust);
 
-                const angle = Math.random() * Math.PI * 2;
-                const dist = Math.random() * 150 + 50;
-
-                gsap.to(p, {
-                    x: Math.cos(angle) * dist,
-                    y: Math.sin(angle) * dist,
+                gsap.to(dust, {
+                    y: y + Math.random() * 50 + 20,
+                    x: x + (Math.random() - 0.5) * 50,
                     opacity: 0,
                     scale: 0,
-                    duration: 2 + Math.random() * 1, // Longer particle life (2-3s)
-                    ease: "power2.out",
-                    onComplete: () => p.remove()
+                    duration: Math.random() * 0.8 + 0.3,
+                    onComplete: () => dust.remove()
                 });
             }
-        }
 
-        // --- NEW FEATURE LOGIC ---
+            // --- 5. AUDIO & PARTICLES ---
+            const music = document.getElementById("bg-music");
+            const musicBtn = document.getElementById("music-btn");
+            let isPlaying = false;
 
-        function initCollage() {
-            // Photos fly in randomly
-            gsap.from(".photo-card", {
-                y: 100, opacity: 0, rotation: () => Math.random() * 20 - 10,
-                stagger: 0.1, duration: 0.8, ease: "back.out(1.7)"
-            });
-            // Make them interactable (with boundaries)
-            Draggable.create(".photo-card", {
-                bounds: ".container",
-                inertia: true,
-                onDragStart: function () { this.target.style.zIndex = 100; },
-                onDragEnd: function () { this.target.style.zIndex = 1; }
-            });
-        }
+            function playMusic() {
+                music.play().then(() => {
+                    isPlaying = true;
+                    updateMusicBtnState();
+                }).catch(console.log);
+            }
 
-        function initLetter() {
-            // Unroll Effect
-            gsap.from(".letter-paper", { scaleY: 0, opacity: 0, duration: 1, ease: "power2.out" });
+            function toggleMusic() {
+                if (isPlaying) {
+                    music.pause();
+                } else {
+                    music.play();
+                }
+                isPlaying = !isPlaying;
+                updateMusicBtnState();
+            }
 
-            // Typewriter Effect for Letter
-            const text = "To my favorite person,\n\nThank you for being the best part of my 2025. I can't wait to make many more memories with you in 2026.\n\nThis year, we will grow even more in our relationship, our careers, and every aspect of our lives. I'll always be your support and biggest fan.\n\nYou are my home. ❤️\n\n- Gunnu";
-            const container = document.getElementById("typewriter-letter");
-            if (container) {
-                container.innerHTML = "";
-                let i = 0;
-                function type() {
-                    if (i < text.length) {
-                        const char = text.charAt(i);
-                        container.innerHTML += char === '\n' ? '<br>' : char;
-                        i++;
-                        setTimeout(type, 50); // Speed of typing
+            function updateMusicBtnState() {
+                if (isPlaying) {
+                    musicBtn.style.opacity = '1';
+                    musicBtn.innerHTML = '🔊 Music ON';
+                    musicBtn.setAttribute('aria-pressed', 'true');
+                } else {
+                    musicBtn.style.opacity = '0.8';
+                    musicBtn.innerHTML = '🔈 Music OFF';
+                    musicBtn.setAttribute('aria-pressed', 'false');
+                }
+            }
+
+            // --- SNOW ENGINE ---
+            function initSnow() {
+                const canvas = document.getElementById("snow-canvas");
+                if (!canvas) return;
+                const ctx = canvas.getContext("2d");
+                let w, h;
+                let flakes = [];
+
+                function resize() {
+                    w = canvas.width = window.innerWidth;
+                    h = canvas.height = window.innerHeight;
+                }
+                window.addEventListener("resize", resize);
+                resize();
+
+                function createFlakes() {
+                    flakes = Array.from({ length: 150 }, () => ({
+                        x: Math.random() * w,
+                        y: Math.random() * h,
+                        r: Math.random() * 3 + 1,
+                        speed: Math.random() * 1 + 0.5,
+                        oscillation: Math.random() * 0.1 // Random oscillation
+                    }));
+                }
+                createFlakes();
+
+                function draw() {
+                    ctx.clearRect(0, 0, w, h);
+                    ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
+                    ctx.beginPath();
+                    flakes.forEach(f => {
+                        ctx.moveTo(f.x, f.y);
+                        ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2);
+
+                        // Update position
+                        f.y += f.speed;
+                        f.x += Math.sin(f.y * 0.01 + f.oscillation);
+
+                        // Reset if out of view
+                        if (f.y > h) {
+                            f.y = -5;
+                            f.x = Math.random() * w;
+                        }
+                    });
+                    ctx.fill();
+                    requestAnimationFrame(draw);
+                }
+                draw();
+            }
+
+            // Initialize Snow immediately
+            initSnow();
+
+            // Particles
+            // Particles - Optimized & Distributed
+            const pc = document.getElementById('particles');
+            const particleCount = window.innerWidth < 768 ? 30 : 60; // Responsive count
+
+            for (let i = 0; i < particleCount; i++) {
+                const p = document.createElement('div');
+                p.className = Math.random() > 0.6 ? 'heart-particle' : 'bubble';
+                if (p.className.includes('heart')) p.innerHTML = '❤';
+                else { const s = Math.random() * 40 + 10 + 'px'; p.style.width = s; p.style.height = s; }
+                pc.appendChild(p);
+
+                // GSAP Floating with Random Refreshes
+                gsap.fromTo(p,
+                    {
+                        x: () => Math.random() * window.innerWidth, // Randomize on every repeat
+                        y: window.innerHeight + 100,
+                        opacity: 0
+                    },
+                    {
+                        y: -150,
+                        x: () => `+=${(Math.random() - 0.5) * 150}`, // Random drift
+                        opacity: () => Math.random() * 0.5 + 0.3,
+                        duration: () => Math.random() * 10 + 15, // Slower, more peaceful
+                        repeat: -1,
+                        repeatRefresh: true, // IMPORTANT: New random values on repeat!
+                        ease: "none",
+                        delay: Math.random() * -25 // Start at different times
+                    }
+                );
+            }
+
+            // Grand Finale (Fireworks + Cannons)
+            function triggerGrandFinale() {
+                launchConfettiCannon();
+                launchFireworks();
+
+                // Add pulse effect to photo
+                const p = document.querySelector('.polaroid');
+                if (p) {
+                    p.classList.add('celebrating');
+                    setTimeout(() => p.classList.remove('celebrating'), 3000); // Pulse for 3s
+                }
+            }
+
+            function launchConfettiCannon() {
+                // Define custom shapes (You can use simple emojis or SVG URLs)
+                const shapes = ['❤️', '🎀', '✨', '😻', '🌸'];
+
+                // CELEBRATION: Increased count slightly for more impact
+                for (let i = 0; i < 150; i++) {
+                    const c = document.createElement('div');
+                    c.style.position = 'fixed';
+                    c.style.zIndex = '1000';
+
+                    // Randomly pick a shape
+                    const shape = shapes[Math.floor(Math.random() * shapes.length)];
+                    c.innerText = shape;
+                    c.style.fontSize = Math.random() * 20 + 10 + 'px'; // Varied sizes
+                    c.style.userSelect = 'none';
+                    c.style.pointerEvents = 'none'; // Ensure they don't block clicks
+
+                    const startX = Math.random() > 0.5 ? Math.random() * 20 : 80 + Math.random() * 20;
+                    c.style.left = startX + 'vw';
+                    c.style.bottom = '-20px';
+
+                    document.body.appendChild(c);
+
+                    gsap.to(c, {
+                        x: (Math.random() - 0.5) * 800,
+                        y: -Math.random() * window.innerHeight * 1.2,
+                        rotation: Math.random() * 720,
+                        opacity: 0,
+                        duration: Math.random() * 3 + 2,
+                        ease: "power2.out",
+                        onComplete: () => c.remove()
+                    });
+                }
+            }
+
+            // --- TYPEWRITER EFFECT ---
+            function typeWriterEffect(text, elementId) {
+                const element = document.getElementById(elementId);
+                if (!element) return;
+                element.innerHTML = ''; // Clear existing text
+                const chars = text.split('');
+
+                // Create a timeline for typing
+                const tl = gsap.timeline();
+
+                chars.forEach((char, index) => {
+                    tl.to(element, {
+                        duration: 0.1, // Typing speed
+                        textContent: element.textContent + char,
+                        snap: { textContent: 1 }, // Ensure whole characters
+                        onUpdate: function () {
+                            element.textContent = text.substring(0, index + 1);
+                        }
+                    }, "+=0.05");
+                });
+            }
+
+            // --- STEAMY GLASS EFFECT (ROBUST FIX) ---
+            function initSteamyGlass() {
+                const img = document.getElementById('final-photo');
+                const wrapper = document.querySelector('.polaroid');
+
+                if (!img || !wrapper) return;
+
+                // Remove existing canvas if any (for replayability)
+                const existingCanvas = wrapper.querySelector('canvas');
+                if (existingCanvas) existingCanvas.remove();
+
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+
+                // Setup Canvas overlay
+                // Match image exactly
+                const width = img.clientWidth || img.width;
+                const height = img.clientHeight || img.height;
+
+                canvas.width = width;
+                canvas.height = height;
+                canvas.style.position = 'absolute';
+                // Use same offset as image
+                canvas.style.top = img.offsetTop + 'px';
+                canvas.style.left = img.offsetLeft + 'px';
+                canvas.style.cursor = 'crosshair';
+                canvas.style.zIndex = '100'; // Make sure it's on top of everything
+                canvas.style.borderRadius = '5px';
+                canvas.style.touchAction = 'none'; // Prevent scrolling while rubbing
+
+                // Create the "Fog"
+                ctx.fillStyle = "rgba(255, 255, 255, 0.9)"; // Slightly thicker fog
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                // Add "Wipe me" text
+                ctx.font = "bold 24px 'Nunito', sans-serif";
+                ctx.fillStyle = "#ff4081";
+                ctx.textAlign = "center";
+                ctx.fillText("Rub to reveal... ❤️", canvas.width / 2, canvas.height / 2);
+
+                wrapper.appendChild(canvas);
+
+                // The Wiping Logic - Throttle for performance
+                let isDrawing = false;
+                let wipeCount = 0;
+                let isRevealed = false;
+
+                function wipe(x, y) {
+                    const rect = canvas.getBoundingClientRect();
+                    const mouseX = x - rect.left;
+                    const mouseY = y - rect.top;
+
+                    ctx.globalCompositeOperation = 'destination-out';
+                    ctx.beginPath();
+                    ctx.arc(mouseX, mouseY, 40, 0, Math.PI * 2); // Larger brush
+                    ctx.fill();
+
+                    // Track Progress
+                    if (!isRevealed) {
+                        wipeCount++;
+                        if (wipeCount > 120) { // Threshold for reveal
+                            isRevealed = true;
+                            revealSecret();
+                        }
                     }
                 }
-                setTimeout(type, 1000); // Start after unroll
-            }
-        }
 
-        function initWishes() {
-            gsap.to(".wishes-list li", {
-                x: 0, opacity: 1, stagger: 0.3, duration: 0.6, ease: "back.out(1.5)"
-            });
-        }
-    </script>
-</body>
+                function revealSecret() {
+                    // Fade out canvas
+                    gsap.to(canvas, {
+                        opacity: 0,
+                        duration: 1.5,
+                        ease: "power2.out",
+                        onComplete: () => {
+                            canvas.remove();
+                            // Enable Draggable ONLY after fog is gone
+                            initDraggableFinale();
+                        }
+                    });
+
+                    // Trigger Finale
+                    setTimeout(() => {
+                        typeWriterEffect("I Love You, my Kuchupuchuuu ❤️\nHappy New Year 2026!", "typewriter-text");
+                        triggerGrandFinale();
+                    }, 500);
+                }
+
+                // Event Listeners - STOP PROPAGATION TO PREVENT DRAGGING
+                const startDrawing = (e) => {
+                    isDrawing = true;
+                    e.preventDefault(); // Stop default touch actions
+                    e.stopPropagation(); // Stop bubbling to Draggable parent
+                };
+
+                const stopDrawing = (e) => {
+                    isDrawing = false;
+                    e.stopPropagation();
+                };
+
+                const draw = (e) => {
+                    // Stop propagation immediately
+                    e.stopPropagation();
+                    if (isDrawing) {
+                        requestAnimationFrame(() => wipe(e.clientX, e.clientY));
+                    }
+                };
+
+                // Mouse
+                canvas.addEventListener('mousedown', startDrawing);
+                canvas.addEventListener('mouseup', stopDrawing);
+                canvas.addEventListener('mouseleave', stopDrawing);
+                canvas.addEventListener('mousemove', draw);
+
+                // Touch
+                canvas.addEventListener('touchstart', startDrawing, { passive: false });
+                canvas.addEventListener('touchend', stopDrawing);
+                canvas.addEventListener('touchmove', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation(); // CRITICAL
+                    if (isDrawing) {
+                        const touch = e.touches[0];
+                        requestAnimationFrame(() => wipe(touch.clientX, touch.clientY));
+                    }
+                }, { passive: false });
+            }
+
+            // --- EASTER EGG ---
+            function initEasterEgg() {
+                let noseClicks = 0;
+                const catImg = document.querySelector('#step-1 img'); // Target the first cat
+
+                if (!catImg) return;
+
+                // Remove previous listeners to avoid duplicates if re-run
+                // (Not easily done with anonymous functions, but logic is idempotent enough)
+
+                catImg.addEventListener('click', (e) => {
+                    // Prevent navigation if clicking purely for easter egg? 
+                    // The image itself isn't the nav button, but let's be safe.
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    noseClicks++;
+
+                    // Visual feedback
+                    gsap.to(catImg, { scale: 0.95, duration: 0.1, yoyo: true, repeat: 1 });
+
+                    if (noseClicks === 3) {
+                        // Trigger the Easter Egg
+                        showPremiumModal(`You found the secret Simu Jaiswalu!<br><br>You and I are the perfect match,<br>never believe anything else 🥺!!!<br><br>I love you 3000! ♾️💖`);
+
+                        // Or trigger a massive confetti explosion
+                        triggerGrandFinale();
+
+                        noseClicks = 0; // Reset
+                    }
+                });
+            }
+
+            // --- PREMIUM MODAL LOGIC ---
+            function showPremiumModal(message) {
+                const modal = document.getElementById('secret-modal');
+                const modalText = document.getElementById('modal-text');
+                const modalContent = modal.querySelector('.premium-modal');
+
+                modalText.innerHTML = message;
+                modal.style.visibility = 'visible';
+                modal.style.opacity = '1';
+                modalContent.style.transform = 'scale(1) translateY(0)';
+            }
+
+            function closePremiumModal() {
+                const modal = document.getElementById('secret-modal');
+                const modalContent = modal.querySelector('.premium-modal');
+
+                modal.style.opacity = '0';
+                modalContent.style.transform = 'scale(0.8) translateY(20px)';
+
+                setTimeout(() => {
+                    modal.style.visibility = 'hidden';
+                }, 400);
+            }
+
+            function launchFireworks() {
+                // CELEBRATION: More fireworks!
+                for (let i = 0; i < 12; i++) {
+                    setTimeout(() => createFirework(Math.random() * 80 + 10, Math.random() * 60 + 10), i * 400);
+                }
+            }
+
+            function createFirework(x, y) {
+                const colors = ['#ff0055', '#ffdd00', '#00ffaa', '#00ccff', '#ff00ff'];
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                // OPTIMIZATION: Reduced particles per firework from 40 to 15
+                for (let i = 0; i < 15; i++) {
+                    const p = document.createElement('div');
+                    p.classList.add('firework-particle');
+                    p.style.backgroundColor = color;
+                    p.style.left = x + 'vw'; p.style.top = y + 'vh';
+                    p.style.width = '6px'; p.style.height = '6px'; p.style.boxShadow = `0 0 10px ${color}`;
+                    document.body.appendChild(p);
+
+                    const angle = Math.random() * Math.PI * 2;
+                    const dist = Math.random() * 150 + 50;
+
+                    gsap.to(p, {
+                        x: Math.cos(angle) * dist,
+                        y: Math.sin(angle) * dist,
+                        opacity: 0,
+                        scale: 0,
+                        duration: 2 + Math.random() * 1, // Longer particle life (2-3s)
+                        ease: "power2.out",
+                        onComplete: () => p.remove()
+                    });
+                }
+            }
+
+            // --- NEW FEATURE LOGIC ---
+
+            function initCollage() {
+                // Photos fly in randomly
+                gsap.from(".photo-card", {
+                    y: 100, opacity: 0, rotation: () => Math.random() * 20 - 10,
+                    stagger: 0.1, duration: 0.8, ease: "back.out(1.7)"
+                });
+                // Make them interactable (with boundaries)
+                Draggable.create(".photo-card", {
+                    bounds: ".container",
+                    inertia: true,
+                    onDragStart: function () { this.target.style.zIndex = 100; },
+                    onDragEnd: function () { this.target.style.zIndex = 1; }
+                });
+            }
+
+            function initLetter() {
+                // Unroll Effect
+                gsap.from(".letter-paper", { scaleY: 0, opacity: 0, duration: 1, ease: "power2.out" });
+
+                // Typewriter Effect for Letter
+                const text = "To my favorite person,\n\nThank you for being the best part of my 2025. I can't wait to make many more memories with you in 2026.\n\nThis year, we will grow even more in our relationship, our careers, and every aspect of our lives. I'll always be your support and biggest fan.\n\nYou are my home. ❤️\n\n- Gunnu";
+                const container = document.getElementById("typewriter-letter");
+                if (container) {
+                    container.innerHTML = "";
+                    let i = 0;
+                    function type() {
+                        if (i < text.length) {
+                            const char = text.charAt(i);
+                            container.innerHTML += char === '\n' ? '<br>' : char;
+                            i++;
+                            setTimeout(type, 50); // Speed of typing
+                        }
+                    }
+                    setTimeout(type, 1000); // Start after unroll
+                }
+            }
+
+            function initWishes() {
+                gsap.to(".wishes-list li", {
+                    x: 0, opacity: 1, stagger: 0.3, duration: 0.6, ease: "back.out(1.5)"
+                });
+            }
+        </script>
+    </body>
 
 </html>
